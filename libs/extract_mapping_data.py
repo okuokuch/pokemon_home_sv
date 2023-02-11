@@ -53,9 +53,9 @@ def devide_by_language(
     return output
 
 
-def save_text(contents, file_name):
+def save_json(content, file_name):
     with open(file_name, "w", encoding="utf8") as f:
-        json.dump(contents, f, indent=2, ensure_ascii=False)
+        json.dump(content, f, indent=2, ensure_ascii=False)
 
 
 POKE_NAMES = devide_by_language(poke_names_list, "poke:")
