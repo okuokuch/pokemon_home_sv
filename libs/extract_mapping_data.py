@@ -1,5 +1,6 @@
 import requests
 import re
+import json
 
 # ポケモンHOMEで動作しているjsファイルの取得。
 url = "https://resource.pokemon-home.com/battledata/js/bundle.js"
@@ -53,8 +54,8 @@ def devide_by_language(
 
 
 def save_text(contents, file_name):
-    with open(file_name, "w", encoding="utf-8") as f:
-        f.write(contents)
+    with open(file_name, "w", encoding="utf8") as f:
+        json.dump(contents, f, indent=2, ensure_ascii=False)
 
 
 POKE_NAMES = devide_by_language(poke_names_list, "poke:")
@@ -64,8 +65,8 @@ ABILITY_NAMES = devide_by_language(ability_names_list, "tokusei:")
 NATURE_NAMES = devide_by_language(nature_names_list, "seikaku:")
 
 # textファイルに出力する場合は、コメントアウトを外す。
-# save_text(str(POKE_NAMES), "./asset/pokemon_names.txt")
-# save_text(str(TYPE_NAMES), "./asset/type_names.txt")
-# save_text(str(MOVE_NAMES), "./asset/move_names.txt")
-# save_text(str(ABILITY_NAMES), "./asset/ability_names.txt")
-# save_text(str(NATURE_NAMES), "./asset/nature_names.txt")
+# save_text(POKE_NAMES, "./asset/pokemon_names.json")
+# save_text(TYPE_NAMES, "./asset/type_names.json")
+# save_text(MOVE_NAMES, "./asset/move_names.json")
+# save_text(ABILITY_NAMES, "./asset/ability_names.json")
+# save_text(NATURE_NAMES, "./asset/nature_names.json")
