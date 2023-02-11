@@ -1,0 +1,2 @@
+# pokemon_home_sv
+ポケモンHOMEの情報を取得するためのプログラム
