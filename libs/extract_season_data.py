@@ -10,7 +10,7 @@ response_json = json.loads(res.text)
 
 
 def get_requirement_parameter(
-    response: dict, season_number: int, rule: int
+    season_number: int, rule: int, response: dict = response_json
 ) -> dict[str, int, int, int]:
     """リクエストに必要なパラメータを取得する
 
@@ -40,6 +40,3 @@ def get_requirement_parameter(
             "ts2": season_info["ts2"],
         }
         return parameters
-
-
-print(get_requirement_parameter(response_json, 2, 0))
