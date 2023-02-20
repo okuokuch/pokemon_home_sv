@@ -65,8 +65,8 @@ ABILITY_NAMES = devide_by_language(ability_names_list, "tokusei:")
 NATURE_NAMES = devide_by_language(nature_names_list, "seikaku:")
 
 # textファイルに出力する場合は、コメントアウトを外す。
-# save_text(POKE_NAMES, "./asset/pokemon_names.json")
-# save_text(TYPE_NAMES, "./asset/type_names.json")
-# save_text(MOVE_NAMES, "./asset/move_names.json")
-# save_text(ABILITY_NAMES, "./asset/ability_names.json")
-# save_text(NATURE_NAMES, "./asset/nature_names.json")
+# save_json(POKE_NAMES, "./asset/pokemon_names.json")
+# save_json(TYPE_NAMES, "./asset/type_names.json")
+# save_json(MOVE_NAMES, "./asset/move_names.json")
+# save_json(ABILITY_NAMES, "./asset/ability_names.json")
+# save_json(NATURE_NAMES, "./asset/nature_names.json")

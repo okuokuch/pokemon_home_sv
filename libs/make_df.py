@@ -1,5 +1,6 @@
 import json
 from constant import MAPPING_POKEMON, MAPPING_MOVE
+import pandas as pd
 
 
 def read_json(path):
@@ -27,6 +28,22 @@ def apply_mapping_data(id_persentage_data: list[dict], mapping_data: dict, lang=
     return data
 
 
+def make_move_list(detail_json: dict, lang="JPN") -> list[list[str, str, str, float]]:
+    output = []
+    for name_id, value_all in detail_json.items():
+        name = MAPPING_POKEMON[lang][int(name_id) - 1]
+        for form_id, value_2 in value_all.items():
+            for i, waza_val in enumerate(value_2["temoti"]["waza"]):
+                move_name = MAPPING_MOVE[lang][waza_val["id"]]
+                raito = waza_val["val"]
+                output.append([name, form_id, i, move_name, raito])
+    return output
+
+
 if __name__ == "__main__":
     # ピカチュウの技が表示されるかのテスト
-    print(apply_mapping_data(detail_json["25"]["0"]["temoti"]["waza"], MAPPING_MOVE))
+    df = pd.DataFrame(
+        make_move_list(detail_json),
+        columns=["pokemon", "form", "rank", "move", "raito"],
+    )
+    df.to_csv("./test/df.csv", encoding="shift-jis")
