@@ -1,0 +1,12 @@
+title: "概要を記述してください。"
+body:
+  - type: textarea
+    attributes:
+      label: "概要"
+      description: "アイディアの内容を記述してください。"
+      placeholder: "アイディアを記述"
+      value: |
+        ## 概要
+        ここにざっくり記述
+        ## 詳細
+

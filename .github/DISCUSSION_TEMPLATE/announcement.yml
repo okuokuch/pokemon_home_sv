@@ -1,0 +1,14 @@
+title: "【必読】"
+labels:
+  - "documentation"
+body:
+  - type: textarea
+    attributes:
+      label: "概要"
+      description: "通知したい内容を記述してください。"
+      placeholder: "通知内容を記述"
+      value: |
+        ## 概要
+        ここにざっくり記述
+        ## 詳細
+
