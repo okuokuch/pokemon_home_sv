@@ -2,9 +2,6 @@ title: "質問事項を記述してください。"
 labels:
   - "question"
 body:
-  - type: markdown
-    attributes:
-      value: "## Thank you for contributing to our project!"
   - type: textarea
     attributes:
       label: "質問事項"
