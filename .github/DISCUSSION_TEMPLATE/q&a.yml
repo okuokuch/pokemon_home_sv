@@ -1,0 +1,16 @@
+title: "[Q&A]"
+labels:
+  - "question"
+body:
+  - type: markdown
+    attributes:
+      value: "## Thank you for contributing to our project!"
+  - type: textarea
+    attributes:
+      label: "質問事項"
+      description: "聞きたいことを記述ください。"
+      placeholder: "質問事項を記述"
+      value: |
+        ## 概要
+        ここにざっくり記述
+
