@@ -134,7 +134,7 @@ class pokemon_home:
         output_ability = []
         output_item = []
         output_type = []
-        for i in range(1, 6):
+        for i in range(1, 7):
             pokemon_all_detail = self.__fetch_pokemon_detail(i)
             move, ability, item, terastype = self.__parse_pokemon_detail(pokemon_all_detail)
             output_move.extend(move)
