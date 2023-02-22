@@ -9,5 +9,8 @@
   - プレイヤー情報
 
 # コード概要
-### extract_mapping_data.py
-ポケモンHOME上で動いているjsファイルから、idと各種名称をマッピングするためのデータを取得スクリプト。
+### pokemon_home.py
+ポケモンHOMEからデータを取得するメソッドをまとめたクラス。
+
+## pokemon_home.ipynb
+Google Colab上でポケモンHOMEの値を取得。Google Drive上に保存するための設定を行ったノートブック
