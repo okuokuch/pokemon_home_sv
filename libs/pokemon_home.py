@@ -2,6 +2,7 @@ import requests
 import json
 import pandas as pd
 from tqdm import tqdm
+from typing import Union, List, Dict
 
 
 class pokemon_home:
@@ -41,7 +42,7 @@ class pokemon_home:
         response_json = json.loads(res.text)
         self.params = self._fetch_requirement_parameter(season_number, rule, response_json)
 
-    def _fetch_requirement_parameter(self, season_number: int, rule: int, response: dict) -> dict[str, int, int, int]:
+    def _fetch_requirement_parameter(self, season_number: int, rule: int, response: Dict) -> Dict[Union[str, int]]:
         """jsonからリクエストに必要なパラメータを取得する
 
         param:
@@ -85,7 +86,7 @@ class pokemon_home:
         )
         return json.loads(response.text)
 
-    def __convert_id_to_name(self, id: str | int, mapping_data: list | dict):
+    def __convert_id_to_name(self, id: Union[str, int], mapping_data: Union[List, Dict]) -> str:
         """マッピングデータを用いて、IDを名前に変換する"""
         if type(mapping_data) == list:
             name = mapping_data[int(id)]
@@ -93,7 +94,7 @@ class pokemon_home:
             name = mapping_data[str(id)]
         return name
 
-    def __parse_pokemon_detail(self, detail_json: dict):
+    def __parse_pokemon_detail(self, detail_json: Dict):
         """ポケモンデータ詳細のjsonファイルから、データを取得、加工する
 
         param:
@@ -126,7 +127,7 @@ class pokemon_home:
                 )
         return output_move, output_ability, output_item, output_teratype
 
-    def __output_detail(self, info_json: list, pokemon_name: str, pokemon_id: str, form_id: str, mapping_data: dict):
+    def __output_detail(self, info_json: list, pokemon_name: str, pokemon_id: str, form_id: str, mapping_data: Dict):
         """ポケモンデータ詳細の入ったリストからデータを取得し、メタデータを付与して返す
 
         param:
