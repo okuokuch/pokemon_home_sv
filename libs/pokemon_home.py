@@ -148,14 +148,14 @@ class pokemon_home:
         """ポケモンランキングデータを加工して出力
 
         return:
-            リスト[ポケモンID, ポケモン名, フォルムID]を複数格納したリスト
+            リスト[ポケモンID, フォルムID, ポケモン名]を複数格納したリスト
         """
         pokemon_ranking = self.__fetch_pokemon_ranking()
         output = []
         for i, pokemon in enumerate(pokemon_ranking):
             pokemon_name = self.__convert_id_to_name(pokemon["id"] - 1, self.POKEMON)
             form_id = pokemon["form"]
-            data = [i + 1, pokemon_name, form_id]
+            data = [i + 1, form_id, pokemon_name]
             output.append(data)
         return output
 
