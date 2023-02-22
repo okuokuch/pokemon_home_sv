@@ -42,7 +42,7 @@ class pokemon_home:
         response_json = json.loads(res.text)
         self.params = self._fetch_requirement_parameter(season_number, rule, response_json)
 
-    def _fetch_requirement_parameter(self, season_number: int, rule: int, response: dict) -> dict[Union[str, int]]:
+    def _fetch_requirement_parameter(self, season_number: int, rule: int, response: dict):
         """jsonからリクエストに必要なパラメータを取得する
 
         param:
