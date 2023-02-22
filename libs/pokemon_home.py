@@ -19,6 +19,7 @@ class pokemon_home:
         self.MOVE = self.__read_json("{}/move_names.json".format(folder_path))[language]
         self.ABILITY = self.__read_json("{}/ability_names.json".format(folder_path))[language]
         self.TYPE = self.__read_json("{}/type_names.json".format(folder_path))[language]
+        # アイテム名は日本語のみ
         self.ITEM = self.__read_json("{}/item_names.json".format(folder_path))["itemname"]
 
     def __read_json(self, path: str):
@@ -71,11 +72,13 @@ class pokemon_home:
         return parameters
 
     def __fetch_pokemon_ranking(self):
+        """APIを叩いてポケモンランキングを取得する"""
         url = "https://resource.pokemon-home.com/battledata/ranking/scvi/{cid}/{rst}/{ts}/pokemon"
         response = requests.get(url.format(cid=self.params["cid"], rst=self.params["rst"], ts=self.params["ts2"]))
         return json.loads(response.text)
 
     def __fetch_pokemon_detail(self, num: int):
+        """APIを叩いてポケモンデータ詳細を取得する"""
         url = "https://resource.pokemon-home.com/battledata/ranking/scvi/{cid}/{rst}/{ts}/pdetail-{num}"
         response = requests.get(
             url.format(cid=self.params["cid"], rst=self.params["rst"], ts=self.params["ts2"], num=num)
@@ -83,6 +86,7 @@ class pokemon_home:
         return json.loads(response.text)
 
     def __convert_id_to_name(self, id: str | int, mapping_data: list | dict):
+        """マッピングデータを用いて、IDを名前に変換する"""
         if type(mapping_data) == list:
             name = mapping_data[int(id)]
         elif type(mapping_data) == dict:
@@ -90,10 +94,20 @@ class pokemon_home:
         return name
 
     def __parse_pokemon_detail(self, detail_json: dict):
+        """ポケモンデータ詳細のjsonファイルから、データを取得、加工する
+
+        param:
+            detail_json:JSON形式のデータ詳細ファイル
+        return:
+            output_move:技所持率に関するデータ詳細
+            output_ability:特性に関するデータ詳細
+            output_item:アイテム所持率に関するデータ詳細
+            output_teratype:テラスタイプに関するデータ詳細
+        """
         output_move = []
         output_ability = []
         output_item = []
-        output_type = []
+        output_teratype = []
         for pokemon_id, value in tqdm(detail_json.items()):
             pokemon_name = self.__convert_id_to_name(int(pokemon_id) - 1, self.POKEMON)
             for form_id, value_2 in value.items():
@@ -107,12 +121,23 @@ class pokemon_home:
                 output_item.extend(
                     self.__output_detail(pokemon_info["motimono"], pokemon_name, pokemon_id, form_id, self.ITEM)
                 )
-                output_type.extend(
+                output_teratype.extend(
                     self.__output_detail(pokemon_info["terastal"], pokemon_name, pokemon_id, form_id, self.TYPE)
                 )
-        return output_move, output_ability, output_item, output_type
+        return output_move, output_ability, output_item, output_teratype
 
     def __output_detail(self, info_json: list, pokemon_name: str, pokemon_id: str, form_id: str, mapping_data: dict):
+        """ポケモンデータ詳細の入ったリストからデータを取得し、メタデータを付与して返す
+
+        param:
+            info_json:ポケモンデータ詳細。技、特性、アイテム、テラスタイプの4種類ある。
+            pokemon_name:ポケモン名
+            pokemon_id:全国図鑑ID
+            form_id:フォルムID
+            mapping_data:種別ごとのマッピングデータ
+        return:
+            リスト[ポケモン名, ポケモンID, フォルムID, 順位, 名称, 割合]を複数格納したリスト
+        """
         output = []
         for i, info in enumerate(info_json):
             name = self.__convert_id_to_name(info["id"], mapping_data)
@@ -120,6 +145,11 @@ class pokemon_home:
         return output
 
     def output_pokemon_ranking(self):
+        """ポケモンランキングデータを加工して出力
+
+        return:
+            リスト[ポケモンID, ポケモン名, フォルムID]を複数格納したリスト
+        """
         pokemon_ranking = self.__fetch_pokemon_ranking()
         output = []
         for i, pokemon in enumerate(pokemon_ranking):
@@ -130,18 +160,26 @@ class pokemon_home:
         return output
 
     def output_pokemon_detail(self):
+        """全ポケモンに対する、4種類のポケモンHOMEデータを出力する
+
+        return:
+            output_move:全ポケモンの技所持率に関するデータ詳細
+            output_ability:全ポケモンの特性に関するデータ詳細
+            output_item:全ポケモンのアイテム所持率に関するデータ詳細
+            output_teratype:全ポケモンのテラスタイプに関するデータ詳細
+        """
         output_move = []
         output_ability = []
         output_item = []
-        output_type = []
+        output_teratype = []
         for i in range(1, 7):
             pokemon_all_detail = self.__fetch_pokemon_detail(i)
             move, ability, item, terastype = self.__parse_pokemon_detail(pokemon_all_detail)
             output_move.extend(move)
             output_ability.extend(ability)
             output_item.extend(item)
-            output_type.extend(terastype)
-        return output_move, output_ability, output_item, output_type
+            output_teratype.extend(terastype)
+        return output_move, output_ability, output_item, output_teratype
 
 
 if __name__ == "__main__":
