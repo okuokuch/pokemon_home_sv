@@ -33,7 +33,7 @@ class pokemon_home:
 
         param:
             season_number:シーズン番号
-            rule:シングルは1。ダブルは2を記入
+            rule:シングルは0。ダブルは1を記入
         """
         url = "https://api.battle.pokemon-home.com/tt/cbd/competition/rankmatch/list"
         header = {}
